@@ -10,6 +10,7 @@ import br.com.fernando.moviesbattle.utils.Const;
 public class PesquisaRest {
 
 	static String urlParaChamada = Const.WEBSERVICE + Const.KEY_ACCESS;
+	static String url = "https://imdb-api.com/en/API/Top250Movies/k_jr7ulf3v";
 	
 	public static Busca buscaPorFilme(String nomeFilme) {
 		try {
@@ -35,6 +36,4 @@ public class PesquisaRest {
 			return null;
 		}
 	}
-	
-
 }

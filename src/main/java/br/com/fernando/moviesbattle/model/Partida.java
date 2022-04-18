@@ -1,10 +1,12 @@
 package br.com.fernando.moviesbattle.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,12 +26,34 @@ public class Partida {
 
 	private int pontos;
 	
+	//@JsonBackReference
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "sessao_id", referencedColumnName = "id")
+	private Sessao sessao;
+	
 	@JsonManagedReference
 	@OneToOne(mappedBy = "partida")
 	private Usuario usuario;
 
 	public Partida() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	public Partida(Integer vidas, boolean ativo, int pontos) {
+		super();
+		this.vidas = vidas;
+		this.ativo = ativo;
+		this.pontos = pontos;
+	}
+
+	public Sessao getSessao() {
+		return sessao;
+	}
+	
+	public void setSessao(Sessao sessao) {
+		this.sessao = sessao;
 	}
 
 	public Long getId() {

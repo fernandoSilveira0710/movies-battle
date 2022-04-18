@@ -3,30 +3,10 @@ package br.com.fernando.moviesbattle.domain;
 
 public class Filme {
 
-	private String title;
-	private String rated;
-	private String poster;
 	private String imdbRating;
 	private String imdbVotes;
 	private String imdbID;
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getRated() {
-		return rated;
-	}
-	public void setRated(String rated) {
-		this.rated = rated;
-	}
-	public String getPoster() {
-		return poster;
-	}
-	public void setPoster(String poster) {
-		this.poster = poster;
-	}
+
 	public String getImdbRating() {
 		return imdbRating;
 	}
