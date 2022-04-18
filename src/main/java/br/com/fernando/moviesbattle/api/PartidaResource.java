@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fernando.moviesbattle.domain.Filme;
+import br.com.fernando.moviesbattle.dto.Resposta;
 import br.com.fernando.moviesbattle.model.Partida;
 import br.com.fernando.moviesbattle.model.Sessao;
 import br.com.fernando.moviesbattle.model.Usuario;
@@ -24,7 +27,7 @@ public class PartidaResource {
 
 	@Autowired
 	UsuarioService usuarioService;
-	
+
 	@Autowired
 	FilmeService filmeService;
 
@@ -60,8 +63,8 @@ public class PartidaResource {
 		Usuario usuario = usuarioService.login(nick, senha);
 		Filme[] filmes = new Filme[2];
 		if (usuario != null) {
-			if(usuario.getPartida().isAtivo()) {
-				if ( usuario.getPartida().getSessao() != null) {
+			if (usuario.getPartida().isAtivo()) {
+				if (usuario.getPartida().getSessao() != null) {
 					filmes = filmeService.getFilmes(usuario.getPartida().getSessao(), 2);
 					return ResponseEntity.ok().eTag("Partida iniciada " + usuario.getPartida().getVidas()).body(filmes);
 				} else {
@@ -70,7 +73,7 @@ public class PartidaResource {
 					usuarioService.create(usuario);
 					return ResponseEntity.ok().eTag("Partida iniciada " + usuario.getPartida().getVidas()).body(filmes);
 				}
-			}else {
+			} else {
 				return ResponseEntity.notFound().eTag("Partida não iniciada.").build();
 			}
 
@@ -81,8 +84,34 @@ public class PartidaResource {
 	/*
 	 * post partida receber dois filmes com um selecionado +1 ponto ranking -1 vida
 	 * e verifica se ela é maior que 0 // encerro jogo
-	 * 
 	 */
+	@PostMapping("/{nick}/{senha}")
+	@ResponseBody
+	public ResponseEntity<String> respostaPartida(@PathVariable String nick, @PathVariable String senha,
+			@RequestBody Resposta resposta) {
+		Usuario usuario = usuarioService.login(nick, senha);
+		if (usuario != null) {
+			System.err.println(resposta.toString());
+			String verificaRatingImdbFilme = filmeService.verificaRatingImdbFilme(resposta);
+			if (verificaRatingImdbFilme.equals("1")) {
+				// acertou
+				usuario.getPartida().setPontos(usuario.getPartida().getPontos()+1);
+				return ResponseEntity.ok().eTag("RESPOSTA CORRETA | pontos: " + usuario.getPartida().getPontos())
+						.body("RESPOSTA CORRETA");
+			} else if (verificaRatingImdbFilme.equals("2")) {
+				// errou
+				usuario.getPartida().setVidas(usuario.getPartida().getVidas()-1);
+				return ResponseEntity.ok().eTag("RESPOSTA INCORRETA | vidas restantes: " + usuario.getPartida().getVidas())
+						.body("RESPOSTA INCORRETA");
+			} else if (verificaRatingImdbFilme.equals("3")) {
+				// null
+				return ResponseEntity.notFound().eTag("ERRO DESCONHECIDO.").build();
+			}
+			return ResponseEntity.notFound().eTag("ERRO DESCONHECIDO.").build();
+		} else {
+			return ResponseEntity.notFound().eTag("Usuário não encontrado.").build();
+		}
+	}
 
 	/*
 	 * encerra-partida get encerra jogo verifica
@@ -97,6 +126,7 @@ public class PartidaResource {
 				usuario.getPartida().setPontos(0);
 				usuario.getPartida().setVidas(3);
 				usuario.getPartida().setSessao(null);
+
 				usuarioService.create(usuario);
 				return ResponseEntity.ok().eTag("Partida encerrada " + usuario.getPartida().getVidas())
 						.body(usuario.getPartida());

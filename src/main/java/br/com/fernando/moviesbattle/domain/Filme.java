@@ -25,6 +25,12 @@ public class Filme {
 	public void setImdbID(String imdbID) {
 		this.imdbID = imdbID;
 	}
+	@Override
+	public String toString() {
+		return "Filme [imdbRating=" + imdbRating + ", imdbVotes=" + imdbVotes + ", imdbID=" + imdbID + "]";
+	}
+	
+	
 
 
 	

@@ -73,6 +73,16 @@ public class Sessao {
 	public void setImdbIdFilme2(String imdbIdFilme2) {
 		this.imdbIdFilme2 = imdbIdFilme2;
 	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "Sessao [id=" + id + ", imdbIdFilme1=" + imdbIdFilme1 + ", imdbIdFilme2=" + imdbIdFilme2
+				+ ", respondido=" + respondido + "]";
+	}
+	
 	
 	
 	
