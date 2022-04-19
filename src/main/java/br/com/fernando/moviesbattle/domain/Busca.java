@@ -6,32 +6,32 @@ import java.util.List;
 
 public class Busca {
 
-    private List<Search> search = new ArrayList<Search>();
-    private String totalResults;
-    private String response;
+	private List<Search> search = new ArrayList<Search>();
+	private String totalResults;
+	private String response;
 
-    public List<Search> getSearch() {
-        return search;
-    }
+	public List<Search> getSearch() {
+		return search;
+	}
 
-    public void setSearch(List<Search> search) {
-        this.search = search;
-    }
+	public void setSearch(List<Search> search) {
+		this.search = search;
+	}
 
-    public String getTotalResults() {
-        return totalResults;
-    }
+	public String getTotalResults() {
+		return totalResults;
+	}
 
-    public void setTotalResults(String totalResults) {
-        this.totalResults = totalResults;
-    }
+	public void setTotalResults(String totalResults) {
+		this.totalResults = totalResults;
+	}
 
-    public String getResponse() {
-        return response;
-    }
+	public String getResponse() {
+		return response;
+	}
 
-    public void setResponse(String response) {
-        this.response = response;
-    }
+	public void setResponse(String response) {
+		this.response = response;
+	}
 
 }

@@ -10,8 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * 
+ * @author Fernando Silveira
+ *
+ * 
+ */
 @Entity
 @Table(name = "TB_PARTIDA")
 public class Partida {
@@ -25,12 +32,12 @@ public class Partida {
 	private boolean ativo;
 
 	private int pontos;
-	
-	//@JsonBackReference
+
+	@JsonBackReference
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "sessao_id", referencedColumnName = "id")
 	private Sessao sessao;
-	
+
 	@JsonManagedReference
 	@OneToOne(mappedBy = "partida")
 	private Usuario usuario;
@@ -38,8 +45,6 @@ public class Partida {
 	public Partida() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 	public Partida(Integer vidas, boolean ativo, int pontos) {
 		super();
@@ -51,7 +56,7 @@ public class Partida {
 	public Sessao getSessao() {
 		return sessao;
 	}
-	
+
 	public void setSessao(Sessao sessao) {
 		this.sessao = sessao;
 	}
@@ -63,11 +68,11 @@ public class Partida {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
-	
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}

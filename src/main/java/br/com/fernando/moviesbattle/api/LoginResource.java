@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fernando.moviesbattle.model.Usuario;
 import br.com.fernando.moviesbattle.service.UsuarioService;
+import io.swagger.annotations.Api;
 
+@Api(value = "login", description = "Realiza o login do usuário")
 @RestController
 @RequestMapping("api/login")
 public class LoginResource {
@@ -25,10 +27,8 @@ public class LoginResource {
 	public ResponseEntity<Usuario> login(@PathVariable(value = "nick") String nick,
 			@PathVariable(value = "senha") String senha) {
 		Usuario usuario = usuarioService.login(nick, senha);
-		return (usuario != null) ? 
-				  ResponseEntity.ok().eTag("Usuario logado " + usuario.getNick()).body(usuario)
+		return (usuario != null) ? ResponseEntity.ok().eTag("Usuario logado " + usuario.getNick()).body(usuario)
 				: ResponseEntity.notFound().eTag("Usuário não encontradp.").build();
 	}
-	
-	
+
 }

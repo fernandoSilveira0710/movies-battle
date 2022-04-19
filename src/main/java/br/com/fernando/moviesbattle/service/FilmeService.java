@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.fernando.moviesbattle.domain.Filme;
 import br.com.fernando.moviesbattle.dto.Resposta;
 import br.com.fernando.moviesbattle.model.Sessao;
+import br.com.fernando.moviesbattle.model.Usuario;
 import br.com.fernando.moviesbattle.rest.PesquisaRest;
 import br.com.fernando.moviesbattle.utils.Const;
 import br.com.fernando.moviesbattle.utils.Util;
@@ -25,31 +26,34 @@ public class FilmeService {
 				filmes = comparaFilmes(sessao);
 			}
 		} else {
-			filmes[0] = getFilme();
-			filmes[1] = getFilme();
+			filmes = comparaFilmes(sessao);
 		}
 		return filmes;
 	}
 
 	private Filme[] comparaFilmes(Sessao sessao) {
 		Filme[] filmes = new Filme[2];
+		System.err.println("COMPARA");
 		while (true) {
 			filmes[0] = getFilme();
 			do {
 				filmes[1] = getFilme();
 			} while (filmes[0].getImdbRating().equals(filmes[1].getImdbRating()));
 
-			if (!filmes[0].getImdbRating().equals(filmes[1].getImdbRating())) {
-				if (!filmes[0].getImdbID().equals(sessao.getImdbIdFilme1())
-						&& !filmes[0].getImdbID().equals(sessao.getImdbIdFilme2())
-						&& !filmes[1].getImdbID().equals(sessao.getImdbIdFilme1())
-						&& !filmes[1].getImdbID().equals(sessao.getImdbIdFilme2())) {
-					System.out.println("NÃO SÃO IGUAIS");
-					break;
-				} else {
-					continue;
+			if (sessao != null) {
+				if (!filmes[0].getImdbRating().equals(filmes[1].getImdbRating())) {
+					if (!filmes[0].getImdbID().equals(sessao.getImdbIdFilme1())
+							&& !filmes[0].getImdbID().equals(sessao.getImdbIdFilme2())
+							&& !filmes[1].getImdbID().equals(sessao.getImdbIdFilme1())
+							&& !filmes[1].getImdbID().equals(sessao.getImdbIdFilme2())) {
+						System.out.println("NÃO SÃO IGUAIS");
+						break;
+					} else {
+						continue;
+					}
 				}
 			}
+			break;
 		}
 		return filmes;
 	}
@@ -58,10 +62,10 @@ public class FilmeService {
 		return PesquisaRest.buscaPorId(Const.imdbIds.get(Util.geraNumerosRandom(0, 250)));
 	}
 
-	public String verificaRatingImdbFilme(Resposta resposta) {
+	public String verificaRatingImdbFilme(Usuario usuario, Resposta resposta) {
 		List<Filme> filmes = new ArrayList<>();
-		filmes.add(PesquisaRest.buscaPorId(resposta.imdbId1));
-		filmes.add(PesquisaRest.buscaPorId(resposta.imdbId2));
+		filmes.add(PesquisaRest.buscaPorId(usuario.getPartida().getSessao().getImdbIdFilme1()));
+		filmes.add(PesquisaRest.buscaPorId(usuario.getPartida().getSessao().getImdbIdFilme2()));
 
 		if (!filmes.isEmpty() && filmes.size() == 2) {
 			try {

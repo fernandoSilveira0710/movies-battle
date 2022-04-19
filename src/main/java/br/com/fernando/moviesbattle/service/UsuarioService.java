@@ -28,10 +28,14 @@ public class UsuarioService {
 
 	public boolean valida(Usuario usuario) {
 		List<Boolean> validacao = new ArrayList<>();
-		validacao.add((usuario.getNick() != null));
-		validacao.add((usuario.getSenha() != null));
-		validacao.add((!usuario.getNick().equals("")));
-		validacao.add((!usuario.getSenha().equals("")));
+		try {
+			validacao.add((usuario.getNick() != null));
+			validacao.add((usuario.getSenha() != null));
+			validacao.add((!usuario.getNick().equals("")));
+			validacao.add((!usuario.getSenha().equals("")));
+		} catch (Exception e2) {
+			validacao.add(false);
+		}
 		return validacao.stream().allMatch(e -> e.booleanValue() == true);// verifica se todos os indices são true
 	}
 

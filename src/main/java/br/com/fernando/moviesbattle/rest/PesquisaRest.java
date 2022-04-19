@@ -10,11 +10,10 @@ import br.com.fernando.moviesbattle.utils.Const;
 public class PesquisaRest {
 
 	static String urlParaChamada = Const.WEBSERVICE + Const.KEY_ACCESS;
-	static String url = "https://imdb-api.com/en/API/Top250Movies/k_jr7ulf3v";
-	
+
 	public static Busca buscaPorFilme(String nomeFilme) {
 		try {
-			String jsonEmString = Connection.conectionForWebService( urlParaChamada + Const.PESQUISA + nomeFilme);
+			String jsonEmString = Connection.conectionForWebService(urlParaChamada + Const.PESQUISA + nomeFilme);
 			Gson gson = new Gson();
 			Busca busca = gson.fromJson(jsonEmString, Busca.class);
 			return busca;
@@ -23,7 +22,7 @@ public class PesquisaRest {
 			return null;
 		}
 	}
-	
+
 	public static Filme buscaPorId(String id) {
 		try {
 			String jsonEmString = Connection.conectionForWebService(urlParaChamada + Const.PESQUISA_ID + id);

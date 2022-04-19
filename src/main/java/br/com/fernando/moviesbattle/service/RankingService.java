@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.fernando.moviesbattle.dto.GenericRanking;
 import br.com.fernando.moviesbattle.model.Ranking;
-import br.com.fernando.moviesbattle.model.Usuario;
 import br.com.fernando.moviesbattle.repository.RankingRepository;
 
 @Service
@@ -22,6 +22,14 @@ public class RankingService {
 
 	public void create(Ranking ranking) {
 		repository.save(ranking);
+	}
+
+	public List<GenericRanking> sortList(List<Ranking> list) {
+		List<GenericRanking> rankings = new ArrayList<>();
+		for (Ranking ranking : list) {
+			rankings.add(new GenericRanking(ranking.getUsuario().getNick(), ranking.getPontuacao()));
+		}
+		return rankings;
 	}
 
 }

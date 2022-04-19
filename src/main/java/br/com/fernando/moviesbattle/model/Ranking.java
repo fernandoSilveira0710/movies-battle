@@ -20,11 +20,11 @@ public class Ranking {
 	private Long id;
 
 	private Integer pontuacao;
-	
+
 	private Integer sequenciaQuiz;
-	
+
 	private Double porcentagemAcerto;
-	
+
 	@JsonManagedReference
 	@OneToOne(mappedBy = "ranking")
 	private Usuario usuario;
@@ -33,36 +33,32 @@ public class Ranking {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
 	public Ranking(Integer pontuacao, Integer sequenciaQuiz, Double porcentagemAcerto) {
 		this.pontuacao = pontuacao;
 		this.sequenciaQuiz = sequenciaQuiz;
 		this.porcentagemAcerto = porcentagemAcerto;
 	}
 
-
-
 	public Double getPorcentagemAcerto() {
 		return porcentagemAcerto;
 	}
-	
+
 	public void setPorcentagemAcerto(Double porcentagemAcerto) {
 		this.porcentagemAcerto = porcentagemAcerto;
 	}
-	
+
 	public Integer getSequenciaQuiz() {
 		return sequenciaQuiz;
 	}
-	
+
 	public void setSequenciaQuiz(Integer sequenciaQuiz) {
 		this.sequenciaQuiz = sequenciaQuiz;
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
-	
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
