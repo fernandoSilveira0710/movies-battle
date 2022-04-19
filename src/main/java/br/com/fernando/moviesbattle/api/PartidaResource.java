@@ -55,7 +55,7 @@ public class PartidaResource {
 					usuario.getPartida().setVidas(3);
 					usuario.setRanking((usuario.getRanking() != null) ? usuario.getRanking() : new Ranking(0, 0, 0.0));
 					usuarioService.create(usuario);
-					return ResponseEntity.ok().eTag("Partida iniciada " + usuario.getPartida().getVidas())
+					return ResponseEntity.ok().eTag("Partida iniciada ")
 							.body(usuario.getPartida());
 				}
 				return ResponseEntity.ok().eTag("Partida já está ativa " + usuario.getPartida().getVidas())

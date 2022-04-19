@@ -6,6 +6,8 @@ public class Filme {
 	private String imdbRating;
 	private String imdbVotes;
 	private String imdbID;
+	private String Title;
+
 
 	public String getImdbRating() {
 		return imdbRating;
@@ -31,9 +33,23 @@ public class Filme {
 		this.imdbID = imdbID;
 	}
 
+	public String getTitle() {
+		return Title;
+	}
+
+	public void setTitle(String title) {
+		this.Title = title;
+	}
+
+	public Filme() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String toString() {
 		return "Filme [imdbRating=" + imdbRating + ", imdbVotes=" + imdbVotes + ", imdbID=" + imdbID + "]";
 	}
+	
+	
 
 }
