@@ -37,7 +37,13 @@ public class Usuario {
 	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
-
+	/**
+	 * Initializes a newly created Usuario object
+	 *
+	 * @param  nick - nome
+	 * @param  senha - senha
+	 * @param  ranking - um ranking
+	 */
 	public Usuario(String nick, String senha, Ranking ranking) {
 		super();
 		this.nick = nick;

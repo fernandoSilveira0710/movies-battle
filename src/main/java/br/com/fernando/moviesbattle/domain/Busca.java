@@ -6,16 +6,16 @@ import java.util.List;
 
 public class Busca {
 
-	private List<Search> search = new ArrayList<Search>();
+	private List<Filmes> filmes = new ArrayList<>();
 	private String totalResults;
 	private String response;
 
-	public List<Search> getSearch() {
-		return search;
+	public List<Filmes> getFilmes() {
+		return filmes;
 	}
 
-	public void setSearch(List<Search> search) {
-		this.search = search;
+	public void setFilmes(List<Filmes> filmes) {
+		this.filmes = filmes;
 	}
 
 	public String getTotalResults() {

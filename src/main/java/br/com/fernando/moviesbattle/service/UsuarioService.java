@@ -2,6 +2,7 @@ package br.com.fernando.moviesbattle.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -36,14 +37,18 @@ public class UsuarioService {
 		} catch (Exception e2) {
 			validacao.add(false);
 		}
-		return validacao.stream().allMatch(e -> e.booleanValue() == true);// verifica se todos os indices são true
+		return validacao.stream().allMatch(e -> e);// verifica se todos os indices são true
 	}
 
 	public List<Usuario> findAll() {
 		return repository.findAll();
 	}
 
+	public Optional<Usuario> findById(Long id) {
+		return repository.findById(id);
+	}
+
 	public Usuario login(String nick, String senha) {
-		return (!nick.equals("") && !senha.equals("")) ? repository.findByNickAndSenha(nick, senha) : null;
+		return (!nick.isEmpty() && !senha.isEmpty()) ? repository.findByNickAndSenha(nick, senha) : null;
 	}
 }
