@@ -1,13 +1,5 @@
 package br.com.fernando.moviesbattle.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import br.com.fernando.moviesbattle.domain.Filme;
 import br.com.fernando.moviesbattle.dto.Login;
 import br.com.fernando.moviesbattle.dto.Resposta;
@@ -23,8 +15,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Api(value = "Partida", description = "Inicia e encerra partidas, também inicia uma rodada e envia a resposta de tal")
+@Api(value = "Partida")
 @RestController
 @RequestMapping("api/partida")
 public class PartidaResource {
@@ -77,13 +72,13 @@ public class PartidaResource {
 	@ResponseBody
 	public ResponseEntity<Filme[]> rodada(@RequestBody Login login) {
 		Usuario usuario = usuarioService.login(login.nick, login.senha);
-		Filme[] filmes = new Filme[2];
+		Filme[] filmes;
 		if (usuario != null) {
 			if (usuario.getPartida() != null) {
 				if (usuario.getPartida().isAtivo()) {
 
 					if (usuario.getPartida().getSessao() != null) {
-						filmes = filmeService.getFilmes(usuario.getPartida().getSessao(), 2);
+						filmes = filmeService.getFilmes(usuario.getPartida().getSessao());
 						usuario.getPartida().getSessao().setImdbIdFilme1(filmes[0].getImdbID());
 						usuario.getPartida().getSessao().setImdbIdFilme2(filmes[1].getImdbID());
 						usuario.getPartida().getSessao().setRespondido(false);
@@ -91,7 +86,7 @@ public class PartidaResource {
 						return ResponseEntity.ok().eTag("Partida iniciada" + usuario.getPartida().getVidas())
 								.body(filmes);
 					} else {
-						filmes = filmeService.getFilmes(null, 2);
+						filmes = filmeService.getFilmes(null);
 						usuario.getPartida().setSessao(new Sessao(filmes[0].getImdbID(), filmes[1].getImdbID(), false));
 						usuarioService.create(usuario);
 						return ResponseEntity.ok().eTag("Partida iniciada" + usuario.getPartida().getVidas())
@@ -118,41 +113,43 @@ public class PartidaResource {
 		if (usuario != null) {
 			if (usuario.getPartida() != null) {
 				if (usuario.getPartida().getSessao() != null) {
-					String verificaRatingImdbFilme = filmeService.verificaRatingImdbFilme(usuario, resposta);
-					if (verificaRatingImdbFilme.equals("1")) {// acertou
-						usuario.getRanking().setSequenciaQuiz(usuario.getRanking().getSequenciaQuiz() + 1);
-						usuario.getPartida().setPontos(usuario.getPartida().getPontos() + 1);
+					switch (filmeService.verificaRatingImdbFilme(usuario, resposta)) {
+						case "1": // acertou
 
-						System.err.println(usuario.getPartida().getSessao().toString());
-						usuario.getPartida().setSessao(null);
-						usuarioService.create(usuario);
-						return ResponseEntity.ok()
-								.eTag("RESPOSTA CORRETA | pontos: " + usuario.getPartida().getPontos())
-								.body("RESPOSTA CORRETA");
-					} else if (verificaRatingImdbFilme.equals("2")) {// errou
-						if (usuario.getPartida().getVidas() > 0) {
 							usuario.getRanking().setSequenciaQuiz(usuario.getRanking().getSequenciaQuiz() + 1);
-							usuario.getPartida().setVidas(usuario.getPartida().getVidas() - 1);
-							sessaoService.deleteById(usuario.getPartida().getSessao().getId());
+							usuario.getPartida().setPontos(usuario.getPartida().getPontos() + 1);
+
+							System.err.println(usuario.getPartida().getSessao().toString());
 							usuario.getPartida().setSessao(null);
 							usuarioService.create(usuario);
+							return ResponseEntity.ok()
+									.eTag("RESPOSTA CORRETA | pontos: " + usuario.getPartida().getPontos())
+									.body("RESPOSTA CORRETA");
 
-						} else {
-							// encerrar partida
-							Double pontuacao = partService.calcularPontuacao(usuario);
-							usuario.setPartida(null);
-							usuarioService.create(usuario);
-							return ResponseEntity.ok().eTag("Partida encerrada | seus pontos foram: " + pontuacao)
-									.build();
-						}
+						case "2": // errou
+							if (usuario.getPartida().getVidas() > 0) {
+								usuario.getRanking().setSequenciaQuiz(usuario.getRanking().getSequenciaQuiz() + 1);
+								usuario.getPartida().setVidas(usuario.getPartida().getVidas() - 1);
+								sessaoService.deleteById(usuario.getPartida().getSessao().getId());
+								usuario.getPartida().setSessao(null);
+								usuarioService.create(usuario);
 
-						return ResponseEntity.ok()
-								.eTag("RESPOSTA INCORRETA | vidas restantes: " + usuario.getPartida().getVidas())
-								.body("RESPOSTA INCORRETA");
-					} else if (verificaRatingImdbFilme.equals("3")) {// null
-						return ResponseEntity.notFound().eTag("ERRO DESCONHECIDO.").build();
-					} else {
-						return ResponseEntity.notFound().eTag("Partida não iniciada.").build();
+							} else {
+								// encerrar partida
+								Double pontuacao = partService.calcularPontuacao(usuario);
+								usuario.setPartida(null);
+								usuarioService.create(usuario);
+								return ResponseEntity.ok().eTag("Partida encerrada | seus pontos foram: " + pontuacao)
+										.build();
+							}
+
+							return ResponseEntity.ok()
+									.eTag("RESPOSTA INCORRETA | vidas restantes: " + usuario.getPartida().getVidas())
+									.body("RESPOSTA INCORRETA");
+						case "3": // null
+							return ResponseEntity.notFound().eTag("ERRO DESCONHECIDO.").build();
+						default:
+							return ResponseEntity.notFound().eTag("Partida não iniciada.").build();
 					}
 				} else {
 					return ResponseEntity.notFound().eTag("Rodada não iniciada.").build();
@@ -175,7 +172,6 @@ public class PartidaResource {
 			if (usuario.getPartida() != null) {
 				if (usuario.getPartida().isAtivo()) {
 					if (usuario.getPartida().getVidas() < 3 || usuario.getPartida().getPontos() > 0) {
-						System.err.println("ENTROU NOS PONTOS");
 						Double pontuacao = partService.calcularPontuacao(usuario);
 						usuario.setPartida(null);
 						usuarioService.create(usuario);
@@ -191,5 +187,4 @@ public class PartidaResource {
 		}
 		return ResponseEntity.notFound().eTag("Usuário não encontrado.").build();
 	}
-
 }

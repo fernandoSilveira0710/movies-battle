@@ -1,38 +1,32 @@
 package br.com.fernando.moviesbattle.rest;
 
-import com.google.gson.Gson;
-
 import br.com.fernando.moviesbattle.domain.Busca;
 import br.com.fernando.moviesbattle.domain.Filme;
 import br.com.fernando.moviesbattle.utils.Connection;
 import br.com.fernando.moviesbattle.utils.Const;
+import com.google.gson.Gson;
 
 public class PesquisaRest {
 
 	static String urlParaChamada = Const.WEBSERVICE + Const.KEY_ACCESS;
 
-	public static Busca buscaPorFilme(String nomeFilme) {
+	private static Object getBusca(String item, Class<?> classe) {
 		try {
-			String jsonEmString = Connection.conectionForWebService(urlParaChamada + Const.PESQUISA + nomeFilme);
-			Gson gson = new Gson();
-			Busca busca = gson.fromJson(jsonEmString, Busca.class);
-			return busca;
+			String jsonEmString = Connection.conectionForWebService(urlParaChamada + item);
+			return new Gson().fromJson(jsonEmString, classe);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
+
+	public static Busca buscaPorFilme(String nomeFilme) {
+		return (Busca) getBusca(Const.PESQUISA+nomeFilme, Busca.class);
+	}
+
+
 	public static Filme buscaPorId(String id) {
-		try {
-			String jsonEmString = Connection.conectionForWebService(urlParaChamada + Const.PESQUISA_ID + id);
-			Gson gson = new Gson();
-			System.err.println(jsonEmString.toString());
-			Filme filme = gson.fromJson(jsonEmString, Filme.class);
-			return filme;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return (Filme) getBusca(Const.PESQUISA_ID+id, Filme.class);
 	}
 }

@@ -1,18 +1,5 @@
 package br.com.fernando.moviesbattle.api;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
 import br.com.fernando.moviesbattle.dto.GenericRanking;
 import br.com.fernando.moviesbattle.model.Ranking;
 import br.com.fernando.moviesbattle.service.RankingService;
@@ -20,8 +7,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Api(value = "ranking", description = "Lista o ranking")
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Api(value = "ranking")
 @RestController
 @RequestMapping("api/ranking")
 public class RankingResource {

@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+//TODO Refatorar adicionando lista de Filmes no lugar de dois objetos idFilme
 @Entity
 @Table(name = "TB_SESSAO")
 public class Sessao {

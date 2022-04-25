@@ -1,15 +1,13 @@
 package br.com.fernando.moviesbattle.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import br.com.fernando.moviesbattle.model.Usuario;
+import br.com.fernando.moviesbattle.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.fernando.moviesbattle.model.Usuario;
-import br.com.fernando.moviesbattle.repository.UsuarioRepository;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -29,21 +27,21 @@ public class UsuarioService {
 	public boolean valida(Usuario usuario) {
 		List<Boolean> validacao = new ArrayList<>();
 		try {
-			validacao.add((usuario.getNick() != null));
-			validacao.add((usuario.getSenha() != null));
-			validacao.add((!usuario.getNick().equals("")));
-			validacao.add((!usuario.getSenha().equals("")));
+			validacao.add((usuario.getUser() != null));
+			validacao.add((usuario.getPassword() != null));
+			validacao.add((!usuario.getUser().equals("")));
+			validacao.add((!usuario.getPassword().equals("")));
 		} catch (Exception e2) {
 			validacao.add(false);
 		}
-		return validacao.stream().allMatch(e -> e.booleanValue() == true);// verifica se todos os indices são true
+		return validacao.stream().allMatch(e -> e);// verifica se todos os indices são true
 	}
 
 	public List<Usuario> findAll() {
 		return repository.findAll();
 	}
 
-	public Usuario login(String nick, String senha) {
-		return (!nick.equals("") && !senha.equals("")) ? repository.findByNickAndSenha(nick, senha) : null;
+	public Usuario login(String user, String password) {
+		return (!user.isEmpty() && !password.isEmpty()) ? repository.findByUserAndPassword(user, password) : null;
 	}
 }

@@ -1,15 +1,14 @@
 package br.com.fernando.moviesbattle.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
 import br.com.fernando.moviesbattle.model.Partida;
 import br.com.fernando.moviesbattle.model.Ranking;
 import br.com.fernando.moviesbattle.model.Usuario;
 import br.com.fernando.moviesbattle.service.FilmeService;
 import br.com.fernando.moviesbattle.service.RankingService;
 import br.com.fernando.moviesbattle.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 @Component
 public class DadosEstaticos implements CommandLineRunner {
@@ -23,7 +22,7 @@ public class DadosEstaticos implements CommandLineRunner {
 	FilmeService filmeService;
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		Usuario user1 = new Usuario("user1","123",null);
 		Usuario user2 = new Usuario("user2","456",null);
 		Usuario user3 = new Usuario("user3","789",null);

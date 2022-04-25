@@ -1,11 +1,10 @@
 package br.com.fernando.moviesbattle.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import br.com.fernando.moviesbattle.model.Partida;
 import br.com.fernando.moviesbattle.model.Usuario;
 import br.com.fernando.moviesbattle.repository.PartidaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PartidaService {

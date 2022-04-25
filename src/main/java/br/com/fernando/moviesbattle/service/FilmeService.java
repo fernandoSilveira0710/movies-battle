@@ -1,10 +1,5 @@
 package br.com.fernando.moviesbattle.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import br.com.fernando.moviesbattle.domain.Filme;
 import br.com.fernando.moviesbattle.dto.Resposta;
 import br.com.fernando.moviesbattle.model.Sessao;
@@ -12,12 +7,16 @@ import br.com.fernando.moviesbattle.model.Usuario;
 import br.com.fernando.moviesbattle.rest.PesquisaRest;
 import br.com.fernando.moviesbattle.utils.Const;
 import br.com.fernando.moviesbattle.utils.Util;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FilmeService {
 
-	public Filme[] getFilmes(Sessao sessao, int tamanho) {
-		Filme[] filmes = new Filme[tamanho];
+	public Filme[] getFilmes(Sessao sessao) {
+		Filme[] filmes = new Filme[2];
 		if (sessao != null) {
 			if (!sessao.isRespondido()) {
 				filmes[0] = PesquisaRest.buscaPorId(sessao.getImdbIdFilme1());
@@ -63,23 +62,13 @@ public class FilmeService {
 	}
 
 	public String verificaRatingImdbFilme(Usuario usuario, Resposta resposta) {
-		List<Filme> filmes = new ArrayList<>();
-		filmes.add(PesquisaRest.buscaPorId(usuario.getPartida().getSessao().getImdbIdFilme1()));
-		filmes.add(PesquisaRest.buscaPorId(usuario.getPartida().getSessao().getImdbIdFilme2()));
-
-		if (!filmes.isEmpty() && filmes.size() == 2) {
-			try {
-				double imdbRating1 = Double.parseDouble(filmes.get(0).getImdbRating());
-				double imdbRating2 = Double.parseDouble(filmes.get(1).getImdbRating());
-
-				boolean resp = (imdbRating1 > imdbRating2) ? true : false;
-				System.err.println(resp);
+		try {
+				boolean resp = Double.parseDouble(usuario.getPartida().getSessao().getImdbIdFilme1())
+						> Double.parseDouble(usuario.getPartida().getSessao().getImdbIdFilme2());
 				return (resp == resposta.resposta) ? "1" : "2";
 			} catch (Exception e) {
 				return "3";
 			}
-		} else {
-			return "3";
-		}
+
 	}
 }
