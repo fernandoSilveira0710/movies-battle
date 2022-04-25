@@ -6,15 +6,15 @@ import java.util.List;
 
 public class Busca {
 
-	private List<Filmes> filmes = new ArrayList<>();
+	private List<Filme> filmes = new ArrayList<>();
 	private String totalResults;
 	private String response;
 
-	public List<Filmes> getFilmes() {
+	public List<Filme> getFilme() {
 		return filmes;
 	}
 
-	public void setFilmes(List<Filmes> filmes) {
+	public void setFilme(List<Filme> filmes) {
 		this.filmes = filmes;
 	}
 

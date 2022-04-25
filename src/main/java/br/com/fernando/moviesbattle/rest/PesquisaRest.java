@@ -14,8 +14,7 @@ public class PesquisaRest {
 	public static Busca buscaPorFilme(String nomeFilme) {
 		try {
 			String jsonEmString = Connection.conectionForWebService(urlParaChamada + Const.PESQUISA + nomeFilme);
-			Gson gson = new Gson();
-			return gson.fromJson(jsonEmString, Busca.class);
+			return new Gson().fromJson(jsonEmString, Busca.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -25,9 +24,8 @@ public class PesquisaRest {
 	public static Filme buscaPorId(String id) {
 		try {
 			String jsonEmString = Connection.conectionForWebService(urlParaChamada + Const.PESQUISA_ID + id);
-			Gson gson = new Gson();
 			System.err.println(jsonEmString);
-			return gson.fromJson(jsonEmString, Filme.class);
+			return new Gson().fromJson(jsonEmString, Filme.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
