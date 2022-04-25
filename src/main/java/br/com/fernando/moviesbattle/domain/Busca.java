@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Busca {
 
-	private List<Search> search = new ArrayList<Search>();
+	private List<Search> search = new ArrayList<>();
 	private String totalResults;
 	private String response;
 
