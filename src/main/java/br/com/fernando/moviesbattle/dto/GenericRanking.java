@@ -1,6 +1,7 @@
 package br.com.fernando.moviesbattle.dto;
 
 public class GenericRanking {
+
 	public String nick;
 	public Integer pontuacao;
 	

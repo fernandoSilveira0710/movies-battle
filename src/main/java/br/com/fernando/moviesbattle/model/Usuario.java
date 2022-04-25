@@ -1,16 +1,8 @@
 package br.com.fernando.moviesbattle.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "TB_USUARIO")
@@ -20,9 +12,9 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String nick;
+	private String user;
 
-	private String senha;
+	private String password;
 
 	@JsonBackReference
 	@OneToOne(cascade = CascadeType.ALL)
@@ -37,11 +29,17 @@ public class Usuario {
 	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public Usuario(String nick, String senha, Ranking ranking) {
+	/**
+	 * Initializes a newly created Usuario object
+	 *
+	 * @param  user - nome
+	 * @param  password - senha
+	 * @param  ranking - um ranking
+	 */
+	public Usuario(String user, String password, Ranking ranking) {
 		super();
-		this.nick = nick;
-		this.senha = senha;
+		this.user = user;
+		this.password = password;
 		this.ranking = ranking;
 	}
 
@@ -57,24 +55,20 @@ public class Usuario {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public String getUser() {
+		return user;
 	}
 
-	public String getNick() {
-		return nick;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
-	public void setNick(String nick) {
-		this.nick = nick;
+	public String getPassword() {
+		return password;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Ranking getRanking() {
@@ -87,7 +81,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nick=" + nick + ", senha=" + senha + ", ranking=" + ranking + "]";
+		return "Usuario [id=" + id + ", user=" + user + ", password=" + password + ", ranking=" + ranking + "]";
 	}
 
 }
