@@ -1,5 +1,6 @@
 package br.com.fernando.moviesbattle.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -19,8 +20,9 @@ public class Ranking {
 
 	private Double porcentagemAcerto;
 
-	@JsonManagedReference
+	@JsonIgnore
 	@OneToOne(mappedBy = "ranking")
+	@JoinColumn(name = "ranking_id", referencedColumnName = "id")
 	private Usuario usuario;
 
 	public Ranking() {
@@ -64,5 +66,13 @@ public class Ranking {
 	public void setPontuacao(Integer pontuacao) {
 		this.pontuacao = pontuacao;
 	}
+
+	@Override
+	public String toString() {
+		return "Ranking [id=" + id + ", pontuacao=" + pontuacao + ", sequenciaQuiz=" + sequenciaQuiz
+				+ ", porcentagemAcerto=" + porcentagemAcerto + ", usuario=" + usuario + "]";
+	}
+	
+	
 
 }

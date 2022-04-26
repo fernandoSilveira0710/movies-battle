@@ -62,9 +62,13 @@ public class FilmeService {
 	}
 
 	public String verificaRatingImdbFilme(Usuario usuario, Resposta resposta) {
+		System.err.println("USUARIO"+usuario.toString());
 		try {
-				boolean resp = Double.parseDouble(usuario.getPartida().getSessao().getImdbIdFilme1())
-						> Double.parseDouble(usuario.getPartida().getSessao().getImdbIdFilme2());
+				System.err.println("IMDB FILME1: "+usuario.getPartida().getSessao().getImdbIdFilme1());
+				System.err.println("IMDB FILME2: "+usuario.getPartida().getSessao().getImdbIdFilme2());
+				
+				boolean resp = (Double.parseDouble(PesquisaRest.buscaPorId(usuario.getPartida().getSessao().getImdbIdFilme1()).getImdbRating()))
+						> (Double.parseDouble(PesquisaRest.buscaPorId(usuario.getPartida().getSessao().getImdbIdFilme2()).getImdbRating()));
 				return (resp == resposta.resposta) ? "1" : "2";
 			} catch (Exception e) {
 				return "3";

@@ -25,14 +25,8 @@ public class Partida {
 
 	private int pontos;
 
-	@JsonBackReference
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "sessao_id", referencedColumnName = "id")
 	private Sessao sessao;
-
-	@JsonManagedReference
-	@OneToOne(mappedBy = "partida")
-	private Usuario usuario;
 
 	public Partida() {
 		// TODO Auto-generated constructor stub
@@ -61,13 +55,13 @@ public class Partida {
 		this.id = id;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+//	public Usuario getUsuario() {
+//		return usuario;
+//	}
+//
+//	public void setUsuario(Usuario usuario) {
+//		this.usuario = usuario;
+//	}
 
 	public Integer getVidas() {
 		return vidas;
@@ -92,5 +86,13 @@ public class Partida {
 	public void setPontos(int pontos) {
 		this.pontos = pontos;
 	}
+
+	@Override
+	public String toString() {
+		return "Partida [id=" + id + ", vidas=" + vidas + ", ativo=" + ativo + ", pontos=" + pontos + ", sessao="
+				+ sessao + "]";
+	}
+	
+	
 
 }

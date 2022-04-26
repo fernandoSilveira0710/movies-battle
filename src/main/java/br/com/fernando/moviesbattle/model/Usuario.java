@@ -16,12 +16,9 @@ public class Usuario {
 
 	private String password;
 
-	@JsonBackReference
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "partida_id", referencedColumnName = "id")
 	private Partida partida;
 
-	@JsonBackReference
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ranking_id", referencedColumnName = "id")
 	private Ranking ranking;
@@ -81,7 +78,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", user=" + user + ", password=" + password + ", ranking=" + ranking + "]";
+		return "Usuario [id=" + id + ", user=" + user + ", password=" + password + ", ranking=" + ranking.getPontuacao() + ", partida="+partida.getId()+"]";
 	}
 
 }

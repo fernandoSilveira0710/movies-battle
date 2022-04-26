@@ -147,6 +147,7 @@ public class PartidaResource {
 									.eTag("RESPOSTA INCORRETA | vidas restantes: " + usuario.getPartida().getVidas())
 									.body("RESPOSTA INCORRETA");
 						case "3": // null
+							System.err.println("case 3");
 							return ResponseEntity.notFound().eTag("ERRO DESCONHECIDO.").build();
 						default:
 							return ResponseEntity.notFound().eTag("Partida não iniciada.").build();
@@ -155,6 +156,7 @@ public class PartidaResource {
 					return ResponseEntity.notFound().eTag("Rodada não iniciada.").build();
 				}
 			}
+			System.err.println("usuario.getPartida() != null");
 			return ResponseEntity.notFound().eTag("ERRO DESCONHECIDO.").build();
 		} else {
 			return ResponseEntity.notFound().eTag("Usuário não encontrado.").build();

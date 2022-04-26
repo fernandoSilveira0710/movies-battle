@@ -48,14 +48,14 @@ public class DadosEstaticos implements CommandLineRunner {
 		user1.setPartida(partida1);
 		user4.setPartida(partida4);
 
-		partida1.setUsuario(user1);
-		partida4.setUsuario(user4);
-		
-		ranking1.setUsuario(user1);
-		ranking2.setUsuario(user2);
-		ranking3.setUsuario(user3);
-		ranking4.setUsuario(user4);
-		ranking5.setUsuario(user5);
+//		partida1.setUsuario(user1);
+//		partida4.setUsuario(user4);
+//		
+//		ranking1.setUsuario(user1);
+//		ranking2.setUsuario(user2);
+//		ranking3.setUsuario(user3);
+//		ranking4.setUsuario(user4);
+//		ranking5.setUsuario(user5);
 		
 		userService.create(user1);
 		userService.create(user2);
