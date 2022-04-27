@@ -20,9 +20,7 @@ public class Sessao {
 
     private boolean respondido;
 
-    public Sessao() {
-        // TODO Auto-generated constructor stub
-    }
+    public Sessao() {}
 
     public Sessao(List<Filme> imdbIdFilmes, boolean respondido, Integer tamanho) {
         super();

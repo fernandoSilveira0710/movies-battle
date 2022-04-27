@@ -37,12 +37,9 @@ public class FilmeService {
     public String verificaRatingImdbFilme(Usuario usuario, Resposta resposta) {
         List<Filme> filmes = usuario.getPartida().getSessao().getImdbIdFilmes();
 
-        if (!filmes.isEmpty() && filmes.size() == usuario.getPartida().getSessao().getTamanho()) {
+        if (filmes.size() == usuario.getPartida().getSessao().getTamanho()) {
             try {
-                double imdbRating1 = Double.parseDouble(filmes.get(0).getImdbRating());
-                double imdbRating2 = Double.parseDouble(filmes.get(1).getImdbRating());
-
-                boolean resp = imdbRating1 > imdbRating2;
+                boolean resp = Double.parseDouble(filmes.get(0).getImdbRating()) > Double.parseDouble(filmes.get(1).getImdbRating());
                 System.err.println(resp);
                 return (resp == resposta.resposta) ? "1" : "2";
             } catch (Exception e) {
