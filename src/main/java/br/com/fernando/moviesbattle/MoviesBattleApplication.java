@@ -10,11 +10,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @SpringBootApplication
 public class MoviesBattleApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MoviesBattleApplication.class, args);
-
-		Usuario usuario = new Usuario("joao", "1234", new Ranking(0,0,0.0));
-
-
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MoviesBattleApplication.class, args);
+    }
 }

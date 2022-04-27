@@ -7,30 +7,30 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Connection {
-	
-	public static String conectionForWebService(String urlParaChamada) throws Exception {
-		try {
-			URL url = new URL(urlParaChamada);
-			HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
-			if (conexao.getResponseCode() != Const.CODIGO_SUCESSO)
-				throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
+    public static String conectionForWebService(String urlParaChamada) throws Exception {
+        try {
+            URL url = new URL(urlParaChamada);
+            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
-			BufferedReader resposta = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
-			return converteJsonEmString(resposta);
-			
-		} catch (Exception e) {
-			throw new Exception("ERRO: " + e);
-		}
-		
-	}
+            if (conexao.getResponseCode() != Const.CODIGO_SUCESSO)
+                throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
 
-	public static String converteJsonEmString(BufferedReader buffereReader) throws IOException {
-		String resposta, jsonEmString = "";
-		while ((resposta = buffereReader.readLine()) != null) {
-			jsonEmString += resposta;
+            BufferedReader resposta = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
+            return converteJsonEmString(resposta);
 
-		}
-		return jsonEmString;
-	}
+        } catch (Exception e) {
+            throw new Exception("ERRO: " + e);
+        }
+
+    }
+
+    public static String converteJsonEmString(BufferedReader buffereReader) throws IOException {
+        String resposta, jsonEmString = "";
+        while ((resposta = buffereReader.readLine()) != null) {
+            jsonEmString += resposta;
+
+        }
+        return jsonEmString;
+    }
 }

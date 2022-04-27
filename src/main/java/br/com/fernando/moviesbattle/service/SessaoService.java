@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class SessaoService {
 
-	@Autowired
-	SessaoRepository repository;
+    @Autowired
+    SessaoRepository repository;
 
-	public void delete(Sessao sessao) {
-		repository.delete(sessao);
-	}
+    public void delete(Sessao sessao) {
+        repository.delete(sessao);
+    }
 
-	public void deleteById(Long id) {
-		repository.deleteById(id);
-	}
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }

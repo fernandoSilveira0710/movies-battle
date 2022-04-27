@@ -8,60 +8,60 @@ import java.util.List;
 @Entity
 @Table(name = "TB_SESSAO")
 public class Sessao {
-	@Id
-	@Column(name = "id", nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
 	@OneToMany(mappedBy = "sessao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Filme> imdbIdFilmes;
 
-	private Integer tamanho;
+    private Integer tamanho;
 
-	private boolean respondido;
+    private boolean respondido;
 
-	public Sessao() {
-		// TODO Auto-generated constructor stub
-	}
+    public Sessao() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public Sessao(List<Filme> imdbIdFilmes, boolean resposta, Integer tamanho) {
-		super();
-		this.imdbIdFilmes = imdbIdFilmes;
-		this.resposta = resposta;
-		this.tamanho = tamanho;
-	}
+    public Sessao(List<Filme> imdbIdFilmes, boolean respondido, Integer tamanho) {
+        super();
+        this.imdbIdFilmes = imdbIdFilmes;
+        this.respondido = respondido;
+        this.tamanho = tamanho;
+    }
 
-	public boolean isRespondido() {
-		return respondido;
-	}
+    public boolean isRespondido() {
+        return respondido;
+    }
 
-	public void setRespondido(boolean respondido) {
-		this.respondido = respondido;
-	}
+    public void setRespondido(boolean respondido) {
+        this.respondido = respondido;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Integer getTamanho() {
-		return tamanho;
-	}
+    public Integer getTamanho() {
+        return tamanho;
+    }
 
-	public List<Filme> getImdbIdFilmes() {
-		return imdbIdFilmes;
-	}
+    public void setTamanho(Integer tamanho) {
+        this.tamanho = tamanho;
+    }
 
-	public void setImdbIdFilmes(List<Filme> imdbIdFilmes) {
-		this.imdbIdFilmes = imdbIdFilmes;
-	}
+    public List<Filme> getImdbIdFilmes() {
+        return imdbIdFilmes;
+    }
 
-	public void setTamanho(Integer tamanho) {
-		this.tamanho = tamanho;
-	}
+    public void setImdbIdFilmes(List<Filme> imdbIdFilmes) {
+        this.imdbIdFilmes = imdbIdFilmes;
+    }
 
-	@Override
-	public String toString() {
-		return "Sessao [id=" + id + ", imdbIdFilmes=" + imdbIdFilmes.toString() + ", resposta=" + resposta + "]";
-	}
-
+    @Override
+    public String toString() {
+        return "Sessao [id=" + id + ", imdbIdFilmes=" + imdbIdFilmes.toString() + ", respondido=" + respondido + "]";
+    }
+    
 }

@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/login")
 public class LoginResource {
 
-	@Autowired
-	UsuarioService usuarioService;
+    @Autowired
+    UsuarioService usuarioService;
 
-	@GetMapping("/{user}/{password}")
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	@ResponseBody
-	public ResponseEntity<Usuario> login(@PathVariable(value = "user") String user,@PathVariable(value = "password") String password) {
-		Usuario usuario = usuarioService.login(user, password);
-		return (usuario != null) ? ResponseEntity.ok().eTag("Usuario logado " + usuario.getUser()).body(usuario)
-				: ResponseEntity.notFound().eTag("Usuário não encontrado.").build();
-	}
+    @GetMapping("/{user}/{password}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseBody
+    public ResponseEntity<Usuario> login(@PathVariable(value = "user") String user, @PathVariable(value = "password") String password) {
+        Usuario usuario = usuarioService.login(user, password);
+        return (usuario != null) ? ResponseEntity.ok().eTag("Usuario logado " + usuario.getUser()).body(usuario)
+                : ResponseEntity.notFound().eTag("Usuário não encontrado.").build();
+    }
 
 }

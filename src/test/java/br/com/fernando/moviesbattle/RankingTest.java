@@ -7,11 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class RankingTest {
-	@Autowired
-	RankingService rankingService;
-	
-	@Test
-	public void teste() {
-		//nada por aqui
-	}
+    @Autowired
+    RankingService rankingService;
+
+    @Test
+    public void teste() {
+        //nada por aqui
+    }
 }
