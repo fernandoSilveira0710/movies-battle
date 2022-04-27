@@ -1,5 +1,14 @@
 package br.com.fernando.moviesbattle.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.fernando.moviesbattle.model.Usuario;
 import br.com.fernando.moviesbattle.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +49,11 @@ public class UsuarioService {
 	public List<Usuario> findAll() {
 		return repository.findAll();
 	}
+
+	public Optional<Usuario> findById(Long id) {
+		return repository.findById(id);
+	}
+
 
 	public Usuario login(String user, String password) {
 		return (!user.isEmpty() && !password.isEmpty()) ? repository.findByUserAndPassword(user, password) : null;

@@ -70,27 +70,24 @@ public class PartidaResource {
 			@ApiResponse(code = 404, message = "Erro ao iniciar rodada") })
 	@PostMapping("/rodada")
 	@ResponseBody
-	public ResponseEntity<Filme[]> rodada(@RequestBody Login login) {
+	public ResponseEntity<List<Filme>> rodada(@RequestBody Login login) {
+
 		Usuario usuario = usuarioService.login(login.nick, login.senha);
-		Filme[] filmes;
+
 		if (usuario != null) {
 			if (usuario.getPartida() != null) {
 				if (usuario.getPartida().isAtivo()) {
-
 					if (usuario.getPartida().getSessao() != null) {
-						filmes = filmeService.getFilmes(usuario.getPartida().getSessao());
-						usuario.getPartida().getSessao().setImdbIdFilme1(filmes[0].getImdbID());
-						usuario.getPartida().getSessao().setImdbIdFilme2(filmes[1].getImdbID());
-						usuario.getPartida().getSessao().setRespondido(false);
+						usuario.getPartida().getSessao().setImdbIdFilmes(filmeService.getFilmes(usuario.getPartida().getSessao()));
+						usuario.getPartida().getSessao().setResposta(false);
 						usuarioService.create(usuario);
 						return ResponseEntity.ok().eTag("Partida iniciada" + usuario.getPartida().getVidas())
-								.body(filmes);
+								.body(usuario.getPartida().getSessao().getImdbIdFilmes());
 					} else {
-						filmes = filmeService.getFilmes(null);
-						usuario.getPartida().setSessao(new Sessao(filmes[0].getImdbID(), filmes[1].getImdbID(), false));
+						usuario.getPartida().setSessao(new Sessao(filmeService.getFilmes(null), false, 2));
 						usuarioService.create(usuario);
 						return ResponseEntity.ok().eTag("Partida iniciada" + usuario.getPartida().getVidas())
-								.body(filmes);
+								.body(usuario.getPartida().getSessao().getImdbIdFilmes());
 					}
 				} else {
 					return ResponseEntity.notFound().eTag("Partida não iniciada.").build();
@@ -115,17 +112,14 @@ public class PartidaResource {
 				if (usuario.getPartida().getSessao() != null) {
 					switch (filmeService.verificaRatingImdbFilme(usuario, resposta)) {
 						case "1": // acertou
-
 							usuario.getRanking().setSequenciaQuiz(usuario.getRanking().getSequenciaQuiz() + 1);
 							usuario.getPartida().setPontos(usuario.getPartida().getPontos() + 1);
-
 							System.err.println(usuario.getPartida().getSessao().toString());
 							usuario.getPartida().setSessao(null);
 							usuarioService.create(usuario);
 							return ResponseEntity.ok()
 									.eTag("RESPOSTA CORRETA | pontos: " + usuario.getPartida().getPontos())
 									.body("RESPOSTA CORRETA");
-
 						case "2": // errou
 							if (usuario.getPartida().getVidas() > 0) {
 								usuario.getRanking().setSequenciaQuiz(usuario.getRanking().getSequenciaQuiz() + 1);
@@ -147,7 +141,6 @@ public class PartidaResource {
 									.eTag("RESPOSTA INCORRETA | vidas restantes: " + usuario.getPartida().getVidas())
 									.body("RESPOSTA INCORRETA");
 						case "3": // null
-							System.err.println("case 3");
 							return ResponseEntity.notFound().eTag("ERRO DESCONHECIDO.").build();
 						default:
 							return ResponseEntity.notFound().eTag("Partida não iniciada.").build();

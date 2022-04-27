@@ -1,12 +1,10 @@
 package br.com.fernando.moviesbattle.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-//TODO Refatorar adicionando lista de Filmes no lugar de dois objetos idFilme
+import br.com.fernando.moviesbattle.domain.Filme;
+
+import javax.persistence.*;
+import java.util.List;
+
 @Entity
 @Table(name = "TB_SESSAO")
 public class Sessao {
@@ -15,9 +13,10 @@ public class Sessao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String imdbIdFilme1;
+	@OneToMany(mappedBy = "sessao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Filme> imdbIdFilmes;
 
-	private String imdbIdFilme2;
+	private Integer tamanho;
 
 	private boolean respondido;
 
@@ -25,11 +24,11 @@ public class Sessao {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Sessao(String imdbIdFilme1, String imdbIdFilme2, boolean respondido) {
+	public Sessao(List<Filme> imdbIdFilmes, boolean resposta, Integer tamanho) {
 		super();
-		this.imdbIdFilme1 = imdbIdFilme1;
-		this.imdbIdFilme2 = imdbIdFilme2;
-		this.respondido = respondido;
+		this.imdbIdFilmes = imdbIdFilmes;
+		this.resposta = resposta;
+		this.tamanho = tamanho;
 	}
 
 	public boolean isRespondido() {
@@ -44,30 +43,25 @@ public class Sessao {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Integer getTamanho() {
+		return tamanho;
 	}
 
-	public String getImdbIdFilme1() {
-		return imdbIdFilme1;
+	public List<Filme> getImdbIdFilmes() {
+		return imdbIdFilmes;
 	}
 
-	public void setImdbIdFilme1(String imdbIdFilme1) {
-		this.imdbIdFilme1 = imdbIdFilme1;
+	public void setImdbIdFilmes(List<Filme> imdbIdFilmes) {
+		this.imdbIdFilmes = imdbIdFilmes;
 	}
 
-	public String getImdbIdFilme2() {
-		return imdbIdFilme2;
-	}
-
-	public void setImdbIdFilme2(String imdbIdFilme2) {
-		this.imdbIdFilme2 = imdbIdFilme2;
+	public void setTamanho(Integer tamanho) {
+		this.tamanho = tamanho;
 	}
 
 	@Override
 	public String toString() {
-		return "Sessao [id=" + id + ", imdbIdFilme1=" + imdbIdFilme1 + ", imdbIdFilme2=" + imdbIdFilme2
-				+ ", respondido=" + respondido + "]";
+		return "Sessao [id=" + id + ", imdbIdFilmes=" + imdbIdFilmes.toString() + ", resposta=" + resposta + "]";
 	}
 
 }
