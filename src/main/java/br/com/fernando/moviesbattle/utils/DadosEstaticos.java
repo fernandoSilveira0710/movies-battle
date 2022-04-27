@@ -15,12 +15,6 @@ public class DadosEstaticos implements CommandLineRunner {
     @Autowired
     UsuarioService userService;
 
-//    @Autowired
-//    RankingService rankingService;
-//
-//    @Autowired
-//    FilmeService filmeService;
-
     @Override
     public void run(String... args) {
 
