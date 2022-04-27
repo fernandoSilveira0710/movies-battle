@@ -17,10 +17,6 @@ public class Filme {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String imdbID;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "sessao_id_id")
-    private Sessao sessaoId;
-
     private String imdbRating;
 
     private String Title;
