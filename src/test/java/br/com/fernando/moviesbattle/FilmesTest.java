@@ -17,6 +17,6 @@ public class FilmesTest {
 	@Test
 	public void enviaFilmesComIdNulloEsperandoQueRetorneDoisNovosFilmesComUmVetorDeTamanhoDOis() {
 		Filme[] filmes = new Filme[2];
-		assertEquals(filmes.length, filmeService.getFilmes(new Sessao(null, null, false)).length);
+		assertEquals(filmes.length, filmeService.getFilmes(new Sessao(null, null, false,null,null)).length);
 	}
 }
