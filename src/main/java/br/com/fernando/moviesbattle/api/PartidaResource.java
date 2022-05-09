@@ -1,5 +1,13 @@
 package br.com.fernando.moviesbattle.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.fernando.moviesbattle.domain.Filme;
 import br.com.fernando.moviesbattle.dto.Login;
 import br.com.fernando.moviesbattle.dto.Resposta;
@@ -15,9 +23,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @Api(value = "Partida")
 @RestController
@@ -82,12 +87,14 @@ public class PartidaResource {
 						usuario.getPartida().getSessao().setImdbIdFilme1(filmes[0].getImdbID());
 						usuario.getPartida().getSessao().setImdbIdFilme2(filmes[1].getImdbID());
 						usuario.getPartida().getSessao().setRespondido(false);
+						usuario.getPartida().getSessao().setPoster1(filmes[0].getPoster());
+						usuario.getPartida().getSessao().setPoster2(filmes[1].getPoster());
 						usuarioService.create(usuario);
 						return ResponseEntity.ok().eTag("Partida iniciada" + usuario.getPartida().getVidas())
 								.body(filmes);
 					} else {
 						filmes = filmeService.getFilmes(null);
-						usuario.getPartida().setSessao(new Sessao(filmes[0].getImdbID(), filmes[1].getImdbID(), false));
+						usuario.getPartida().setSessao(new Sessao(filmes[0].getImdbID(), filmes[1].getImdbID(), false,filmes[0].getPoster(),filmes[1].getPoster()));
 						usuarioService.create(usuario);
 						return ResponseEntity.ok().eTag("Partida iniciada" + usuario.getPartida().getVidas())
 								.body(filmes);

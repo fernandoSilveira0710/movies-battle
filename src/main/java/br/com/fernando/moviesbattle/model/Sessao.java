@@ -20,16 +20,40 @@ public class Sessao {
 	private String imdbIdFilme2;
 
 	private boolean respondido;
+	
+	private String poster1;
+	
+	private String poster2;
 
 	public Sessao() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Sessao(String imdbIdFilme1, String imdbIdFilme2, boolean respondido) {
+	public Sessao(String imdbIdFilme1, String imdbIdFilme2, boolean respondido, String poster1, String poster2) {
 		super();
 		this.imdbIdFilme1 = imdbIdFilme1;
 		this.imdbIdFilme2 = imdbIdFilme2;
 		this.respondido = respondido;
+		this.poster1 = poster1;
+		this.poster2 = poster2;
+	}
+	
+	
+
+	public String getPoster1() {
+		return poster1;
+	}
+
+	public void setPoster1(String poster1) {
+		this.poster1 = poster1;
+	}
+
+	public String getPoster2() {
+		return poster2;
+	}
+
+	public void setPoster2(String poster2) {
+		this.poster2 = poster2;
 	}
 
 	public boolean isRespondido() {

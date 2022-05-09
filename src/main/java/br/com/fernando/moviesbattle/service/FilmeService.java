@@ -1,5 +1,7 @@
 package br.com.fernando.moviesbattle.service;
 
+import org.springframework.stereotype.Service;
+
 import br.com.fernando.moviesbattle.domain.Filme;
 import br.com.fernando.moviesbattle.dto.Resposta;
 import br.com.fernando.moviesbattle.model.Sessao;
@@ -7,10 +9,6 @@ import br.com.fernando.moviesbattle.model.Usuario;
 import br.com.fernando.moviesbattle.rest.PesquisaRest;
 import br.com.fernando.moviesbattle.utils.Const;
 import br.com.fernando.moviesbattle.utils.Util;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class FilmeService {
